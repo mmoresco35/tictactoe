@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
+import React ,{useState} from 'react';
 import {
     Text,
-    View,
     TouchableOpacity,
-    Image
+    Alert,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {setBoard} from '../../actions'
 
-export default class Square extends Component {
-    constructor(props) {
-        super(props);
+function Square (props) {
+    const data = useSelector(state=>state)
+    const dispatch = useDispatch();
+    const updateBoard = (move)=> {
+    dispatch(setBoard(move))
     }
-    onClick = ()=>{
-        console.log (this.props.index)
+    const humanMove= (move)=>{
+        updateBoard(move)
+        updateBoard({sign:props.players.device,index:props.index+1})
     }
 
-    render() {
-        return (
-            <TouchableOpacity style = {this.props.style}
-            onPress={this.onClick}
-            >
-                <Text style={this.props.textStyle}>{this.props.value}</Text>    
-            </TouchableOpacity>
-        );
+    const [value, setValue]=useState("");
+    (props.value!=value)?setValue(props.value):null
+    const onClick = ()=>{
+        const move = {sign:props.players.user,index:props.index};
+        (value=="")?humanMove(move):Alert.alert(
+                                                "Error en puslacion", 
+                                                "Ha pulsado una casilla ya usada por '"+value+"'", 
+                                                [
+                                                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                                                ],
+                                                { cancelable: false })
     }
+    return (
+        <TouchableOpacity style = {props.style}
+            onPress={()=>onClick()}
+        >
+            <Text style={props.textStyle}>{value}</Text>    
+        </TouchableOpacity>
+    );
 }
+
+export default Square;
