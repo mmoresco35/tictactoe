@@ -8,7 +8,7 @@ const winningConditions = [
     [0, 4, 8],
     [2, 4, 6]
     ];
-    function handleResultValidation() {
+function validateWinner(mark) {
         let roundWon = false;
         for (let i = 0; i <= 7; i++) {
              const winCondition = winningConditions[i];

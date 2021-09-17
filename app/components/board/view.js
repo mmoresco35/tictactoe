@@ -12,10 +12,9 @@ import {
 import Square from '../square'
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import { useSelector, useDispatch} from 'react-redux';
-import {reset, setBoard, setLastMove} from '../../actions'
+import {reset, setPlayers, setBoard, setLastMove} from '../../actions'
 
 const { width, height } = Dimensions.get('window');
-const boardState = ["X","O","","","","","","",""]
 function Board (props) {
   const isDarkMode = useColorScheme() === 'dark';
     const data = useSelector(state=>state)
@@ -28,11 +27,18 @@ function Board (props) {
     />
     )
     const onCreateMatch=()=>{
-      
-
-
-
+      var order = Math.round(Math.random()*2)
+      console.log (order)
       dispatch(reset())
+      order==1?Alert.alert(
+        "Seleccione su marca", 
+        "La partida se inicia con su jugada, seleccione la marca con la que juega", 
+        [
+            { text: "x", onPress: () => dispatch(setPlayers({user:"X", device:"O"})) },
+            { text: "O", onPress: () => dispatch(setPlayers({user:"O", device:"X"})) }
+        ],
+        { cancelable: false })
+        :dispatch(setBoard({sign:"O",index:4}))
     }
     const undoLastMove=()=>{
       if(data.lastMove.userSquare!=null){
