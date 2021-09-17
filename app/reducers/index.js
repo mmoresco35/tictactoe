@@ -1,4 +1,5 @@
 import * as constants from '../constants';
+import uuid from 'react-native-uuid';
 
 const initialState = {
     matchId:"",
@@ -18,7 +19,7 @@ export default StateReducer = (state = initialState, action) => {
     case constants.SET_MATCHID:
         return {
             ...state,
-            matchId: action.data
+            matchId: uuid.v4()
         };
     case constants.SET_BOARD:
         console.log ("reducer",action)
@@ -39,6 +40,19 @@ export default StateReducer = (state = initialState, action) => {
             ...state,
             players:action.data
         };
+    case constants.RESET:
+            return {
+                matchId:uuid.v4(),
+                boardState:["","","","","","","","",""],
+                lastMove:{
+                    userSquare:null,
+                    deviceSquare:null
+                },
+                players:{
+                    user:"X",
+                    device:"O"
+                }
+            };
     default:
         return state;
     }

@@ -5,17 +5,19 @@ import {
     Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {setBoard} from '../../actions'
+import {setBoard, setLastMove} from '../../actions'
 
 function Square (props) {
     const data = useSelector(state=>state)
     const dispatch = useDispatch();
-    const updateBoard = (move)=> {
-    dispatch(setBoard(move))
-    }
+
     const humanMove= (move)=>{
-        updateBoard(move)
-        updateBoard({sign:props.players.device,index:props.index+1})
+        dispatch(setBoard(move))
+        dispatch(setBoard({sign:props.players.device,index:props.index+1}))
+        dispatch(setLastMove({
+            userSquare:move.index,
+            deviceSquare:props.index+1
+            }))
     }
 
     const [value, setValue]=useState("");

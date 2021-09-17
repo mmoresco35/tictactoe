@@ -1,7 +1,7 @@
 import * as constants from '../constants';
 
-export const setMatchID = (data) => {
-    return { type: constants.SET_MATCHID, data };
+export const setMatchID = () => {
+    return { type: constants.SET_MATCHID};
 };
 
 export const setBoard = (data) => {
@@ -14,3 +14,7 @@ export const setLastMove = (data) => {
 export const setPlayers = (data) => {
     return { type: constants.SET_PLAYERS, data };
 };
+export const reset = () => {
+    return { type: constants.RESET };
+};
+
