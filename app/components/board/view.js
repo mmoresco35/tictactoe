@@ -19,8 +19,7 @@ function Board (props) {
   const isDarkMode = useColorScheme() === 'dark';
     const data = useSelector(state=>state)
     const dispatch = useDispatch();
-    (data.matchId=="")?onCreateMatch():null
-    console.log(data)
+    
     const paintSquare = (item) => 
     (           
     <Square style={styles.square} textStyle={styles.squareText} value={data.boardState[item.index]} index={item.index} players={data.players}
@@ -59,7 +58,6 @@ function Board (props) {
       }
       
     }
-    setBoard
 
 
     return (

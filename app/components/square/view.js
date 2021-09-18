@@ -5,15 +5,24 @@ import {
     Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {setBoard, setLastMove} from '../../actions'
+import {setBoard, setLastMove} from '../../actions';
+import * as logic from '../../logic'
 
 function Square (props) {
     const data = useSelector(state=>state)
     const dispatch = useDispatch();
 
+
+
     const humanMove= (move)=>{
         dispatch(setBoard(move))
-        dispatch(setBoard({sign:props.players.device,index:props.index+1}))
+        console.log (logic.getWinner(data.boardState))
+
+
+        setTimeout(function(){
+            dispatch(setBoard({sign:props.players.device,index:logic.bestMove(data.boardState, data.players )}));
+        },Math.round(Math.random()*3000));
+        console.log (logic.getWinner(data.boardState))
         dispatch(setLastMove({
             userSquare:move.index,
             deviceSquare:props.index+1
